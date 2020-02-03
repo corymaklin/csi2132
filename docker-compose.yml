@@ -1,0 +1,10 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - /Users/cmaklin/Documents/csi2132/project/data:/var/lib/postgresql/data
