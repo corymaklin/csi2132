@@ -1,8 +1,3 @@
-CREATE TYPE name as (
-    first_name varchar(50),
-    last_name varchar(50)
-);
-
 CREATE TYPE address as (
     street_name varchar(50),
     street_number integer,
@@ -24,7 +19,8 @@ CREATE TYPE rating AS ENUM ('1', '2', '3', '4', '5');
 
 CREATE TABLE person (
     id SERIAL PRIMARY KEY,
-    full_name name NOT NULL,
+    first_name varchar(50),
+    last_name varchar(50),
     personal_address address,
     date_of_birth date,
     email varchar(50)[] NOT NULL,
@@ -94,10 +90,10 @@ CREATE TABLE review (
 );
 
 
-INSERT INTO person (full_name, personal_address, date_of_birth, email, phone_number) VALUES
-(row('Cory', 'Maklin')::name, row('Blowfish', 32, 'Ottawa', 'K2G7N1', 'Ontario', 'Canada')::address, '02-14-1997', '{"corymaklin@yahoo.ca"}', '{"613-772-3242"}'),
-(row('Jane', 'Doe')::name, row('RedHerring', 155, 'Winepeg', 'P23FLQ', 'Ontario', 'Canada')::address, '03-29-2019', '{"janedoe62@gmail.com"}', '{"619-743-3675"}'),
-(row('John', 'Connor')::name, row('Terminator', 222, 'New York', 'FFF666', 'New York', 'United States')::address, '11-22-1900', '{"john.connor@gmail.com"}', '{"923-888-8888"}');
+INSERT INTO person (first_name, last_name, personal_address, date_of_birth, email, phone_number) VALUES
+('Cory', 'Maklin', row('Blowfish', 32, 'Ottawa', 'K2G7N1', 'Ontario', 'Canada')::address, '02-14-1997', '{"corymaklin@yahoo.ca"}', '{"613-772-3242"}'),
+('Jane', 'Doe', row('RedHerring', 155, 'Winepeg', 'P23FLQ', 'Ontario', 'Canada')::address, '03-29-2019', '{"janedoe62@gmail.com"}', '{"619-743-3675"}'),
+('John', 'Connor', row('Terminator', 222, 'New York', 'FFF666', 'New York', 'United States')::address, '11-22-1900', '{"john.connor@gmail.com"}', '{"923-888-8888"}');
 
 INSERT INTO property (
     host_id,
@@ -135,3 +131,4 @@ values (3, 1, 1, '02-03-2020', '02-07-2020');
 
 INSERT INTO review (booking_id, property_rating, comment)
 VALUES (1, '5', 'Had an amazing time.');
+
