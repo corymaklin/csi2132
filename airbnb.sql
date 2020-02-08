@@ -15,7 +15,7 @@ CREATE TYPE payment_type AS ENUM ('cash', 'check', 'direct debit', 'credit card'
 
 CREATE TYPE payment_status AS ENUM ('pending', 'completed', 'approved');
 
-CREATE TYPE rating AS ENUM ('1', '2', '3', '4', '5');
+-- CREATE TYPE rating AS ENUM ('1', '2', '3', '4', '5');
 
 CREATE TABLE person (
     id SERIAL PRIMARY KEY,
@@ -59,7 +59,8 @@ CREATE TABLE property (
 );
 
 CREATE TABLE payment (
-    id SERIAL PRIMARY KEY,
+    -- id SERIAL PRIMARY KEY,
+    booking_id INTEGER NOT NULL,
     amount MONEY NOT NULL,
     p_status payment_status NOT NULL,
     p_type payment_type NOT NULL
@@ -69,12 +70,12 @@ CREATE TABLE booking (
     id SERIAL PRIMARY KEY,
     guest_id INTEGER NOT NULL,
     property_id INTEGER NOT NULL,
-    payment_id INTEGER NOT NULL,
+    -- payment_id INTEGER NOT NULL,
     date_from date NOT NULL,
     date_to date NOT NULL,
     FOREIGN KEY (guest_id) REFERENCES person (id),
-    FOREIGN KEY (property_id) REFERENCES property (id),
-    FOREIGN KEY (payment_id) REFERENCES payment (id)
+    FOREIGN KEY (property_id) REFERENCES property (id)
+    -- FOREIGN KEY (payment_id) REFERENCES payment (id)
 );
 
 CREATE TABLE review (
@@ -82,7 +83,7 @@ CREATE TABLE review (
     -- guest_id INTEGER NOT NULL,
     -- property_id INTEGER NOT NULL,
     booking_id INTEGER NOT NULL,
-    property_rating rating NOT NULL,
+    rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
     comment text,
     -- FOREIGN KEY (property_id) REFERENCES property (id),
     -- FOREIGN KEY (guest_id) REFERENCES person (id)
@@ -115,6 +116,16 @@ INSERT INTO property (
     1,
     5,
     '{"internet", "pool"}'
+), (
+    1,
+    row('Verrault', 42, 'Ottawa', 'KKKKKK', 'Ontario', 'Canada')::address,
+    50,
+    'private room',
+    'home',
+    2,
+    0.5,
+    2,
+    '{"internet"}'
 );
 
 INSERT INTO branch (branch_name, branch_address, manager_id)
@@ -123,12 +134,12 @@ VALUES ('Ottawa', row('Joe', 55, 'Gatineau', 'G88F41', 'Quebec', 'Canada')::addr
 INSERT INTO employee (person_id, branch_id, position, salary)
 VALUES (2, 1, 'junior software developer', 70000);
 
-INSERT INTO payment (amount, p_status, p_type)
-VALUES (500, 'completed', 'cash');
+INSERT INTO payment (booking_id, amount, p_status, p_type)
+VALUES (1, 500, 'completed', 'cash');
 
-insert into booking (guest_id, property_id, payment_id, date_from, date_to)
-values (3, 1, 1, '02-03-2020', '02-07-2020');
+insert into booking (guest_id, property_id, date_from, date_to)
+values (3, 1, '02-03-2020', '02-07-2020');
 
-INSERT INTO review (booking_id, property_rating, comment)
-VALUES (1, '5', 'Had an amazing time.');
+INSERT INTO review (booking_id, rating, comment)
+VALUES (1, 5, 'Had an amazing time.');
 
