@@ -1,10 +1,10 @@
 CREATE TYPE address as (
-    street_name varchar(50),
-    street_number integer,
-    city varchar(50),
-    zip_code varchar(50),
-    province varchar(50),
-    country varchar(50)
+    street_name varchar(50) NOT NULL,
+    street_number integer NOT NULL,
+    city varchar(50) NOT NULL,
+    zip_code varchar(50) NOT NULL,
+    province varchar(50) NOT NULL,
+    country varchar(50) NOT NULL
 );
 
 CREATE TYPE room_type AS ENUM ('private room', 'shared room', 'entire property');
@@ -19,9 +19,9 @@ CREATE TYPE payment_status AS ENUM ('pending', 'completed', 'approved');
 
 CREATE TABLE person (
     id SERIAL PRIMARY KEY,
-    first_name varchar(50),
-    last_name varchar(50),
-    personal_address address,
+    first_name varchar(50) NOT NULL,
+    last_name varchar(50) NOT NULL,
+    personal_address address NOT NULL,
     date_of_birth date,
     email varchar(50)[] NOT NULL,
     phone_number varchar(13)[]
