@@ -8,7 +8,20 @@ class Property extends Component {
 
         console.log(propertyAttributes)
 
-    const amenities = _.map(propertyAttributes.amenities, amenity => <li key={ uuidv4() }>{ amenity }</li>);
+        const amenities = _.map(propertyAttributes.amenities, amenity => <li key={ uuidv4() }>{ amenity }</li>);
+
+        const image = btoa(String.fromCharCode.apply(null, propertyAttributes.property_image.data));
+
+        // this.setState({pic: "data:image/png;base64," + image});
+
+        // var image = window.URL.createObjectURL(new Blob([ propertyAttributes.property_image.data ]));
+
+        // let base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+
+        var base64 = btoa(
+        new Uint8Array(propertyAttributes.property_image.data)
+            .reduce((data, byte) => data + String.fromCharCode(byte), '')
+        );
 
         return (
             <div>
@@ -19,6 +32,18 @@ class Property extends Component {
                     { amenities }
                 </ul>
                 <p>Address: { propertyAttributes.property_address }</p>
+                {/* <img src={ `data:image/jpeg;base64,${ propertyAttributes.property_image.data.toString('base64') }` } /> */}
+                {/* <img src={ `data:image/jpeg;base64,${ propertyAttributes.property_image.data }` } /> */}
+
+                {/* <img src={ `data:image/png;base64,${ propertyAttributes.property_image.data }` } /> */}
+                {/* <img src={ `data:image/png;base64,${ propertyAttributes.property_image.data.toString('base64') }` } /> */}
+                <img src={ `png;base64,${ propertyAttributes.property_image.data.toString('base64') }` } />
+                {/* <img src={ `data:image/jpeg;base64,${ propertyAttributes.property_image.data.toString('base64') }` } /> */}
+                <img src={ `jpeg;base64,${ propertyAttributes.property_image.data.toString('base64') }` } />
+                {/* <img src={ 'data:image/png;base64,' + base64 } /> */}
+                {/* <img src={ 'data:image/png;base64,' + image } /> */}
+                {/* <img src={ 'data:image/jpeg;base64,' + image } /> */}
+                {/* <img src={ image } /> */}
             </div>
         );
     }
