@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import Property from './Property';
+import { v4 as uuidv4 } from 'uuid';
 
 class Properties extends Component {
     constructor (props) {
@@ -28,11 +31,18 @@ class Properties extends Component {
     render () {
         const { properties } = this.state;
 
-        console.log(properties)
+        const propertyElements = _.map(properties, propertyAttributes => {
+            return (
+                <Property
+                    key={ uuidv4() }
+                    propertyAttributes={ propertyAttributes }
+                />
+            );
+        });
 
         return (
             <div>
-
+                { propertyElements }
             </div>
         );
     }
