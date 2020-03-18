@@ -18,8 +18,9 @@ app.use(
 );
 
 app.get('/', (req, res) => res.send('Hello World'));
-app.get('/properties', db.getProperties)
-app.get('/persons', db.getPersons)
-app.get('/employees', db.getEmployees)
+app.post('/properties', db.createProperty);
+app.get('/properties', db.getProperties);
+app.get('/persons', db.getPersons);
+app.get('/employees', db.getEmployees);
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

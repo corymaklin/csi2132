@@ -6,6 +6,9 @@ create database <name>;
 ### delete database
 DROP DATABASE <name>;
 
+### run .sql file
+psql -d airbnb -h localhost -U postgres -a -f airbnb.sql
+
 ### list databases
 \l
 

@@ -34,7 +34,35 @@ const getEmployees = (request, response) => {
     });
 };
 
+const createProperty = (request, response) => {
+    const { property } = request.body;
+
+    pool.query('INSERT INTO property (name, email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)', [
+            property.hostId,
+            property.streetName,
+            property.streetNumber,
+            property.city,
+            property.province,
+            property.country,
+            property.zipCode,
+            property.price,
+            property.roomType,
+            property.propertyType,
+            property.bedrooms,
+            property.bathrooms,
+            property.accomodations,
+            property.amenities
+        ],
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            response.status(201).send(`User added with ID: ${result.insertId}`)
+    });
+}
+
 module.exports = {
+    createProperty,
     getProperties,
     getPersons,
     getEmployees
