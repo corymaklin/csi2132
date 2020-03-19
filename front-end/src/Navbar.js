@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Nav, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Nav, NavItem, NavLink } from 'reactstrap';
 import _ from 'lodash';
 
 class Navbar extends Component {
@@ -12,18 +12,10 @@ class Navbar extends Component {
         dropdownOpen: false
     };
   }
-  
-  toggle = () => {
-      this.setState(prevState => ({
-        dropdownOpen: !prevState.dropdownOpen
-      }));
-  }
 
-  handleOnClick = () => {
-      this.props.history.push('/full-time-employees');
-  }
+  render () {
 
-  render() {
+    console.log(this.props)
 
     return (
       <nav className="navbar navbar-expand-sm mb-4">
@@ -43,6 +35,7 @@ class Navbar extends Component {
                 <NavItem right>
                     <NavLink>
                         <Link to="/signup">
+                        {/* <Link to={ { pathname: '/signup', search: this.props.location.search } }> */}
                             Sign up
                         </Link> 
                     </NavLink>
@@ -50,6 +43,7 @@ class Navbar extends Component {
                 <NavItem>
                     <NavLink>
                         <Link to="/login">
+                        {/* <Link to={ { pathname: '/login', search: this.props.location.search } }> */}
                             Login
                         </Link>
                     </NavLink>
@@ -57,6 +51,7 @@ class Navbar extends Component {
                 <NavItem right>
                     <NavLink>
                         <Link to="/property">
+                        {/* <Link to={ { pathname: '/property', search: this.props.location.search } }> */}
                             Add
                         </Link>
                     </NavLink>

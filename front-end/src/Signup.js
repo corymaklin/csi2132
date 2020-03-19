@@ -34,9 +34,11 @@ class Form extends Component {
 
         const json = await response.json()
 
-        // history.push({
-        //     pathname: '/'
-        // });
+        
+
+        history.push({
+            pathname: '/'
+        });
     }
 
     handleChange = (event) => {
