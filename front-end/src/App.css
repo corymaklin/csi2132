@@ -1,0 +1,16 @@
+.navbar {
+    background-color: rgba(234,234,234);
+}
+
+.form-group {
+    margin: 50px;
+}
+
+.input-label {
+    margin: 20px;
+}
+
+.submit-button {
+    float: right;
+    margin: 20px;
+}

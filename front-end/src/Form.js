@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Form extends component {
+class Form extends Component {
     constructor (props) {
         super(props);
 
@@ -20,35 +20,25 @@ class Form extends component {
         }
     }
 
-    async handleSubmit (event) {
-        const {
-            price,
-            bedrooms,
-            bathrooms,
-            roomType,
-            propertyType,
-            streetName,
-            streetNumber,
-            city,
-            province,
-            country,
-            zipCode
-        } = this.state;
+     handleSubmit = async (event) => {
+        const { history } = this.props;
 
         event.preventDefault();
 
-        const property = {
-            price,
-            bedrooms,
-            bathrooms
-        }
+        await fetch('http://localhost:8090/properties', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        });
 
-        fetch('');
-
-        // event.target.reset();
+        history.push({
+            pathname: '/'
+        });
     }
 
-    handleChange (event) {
+    handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
@@ -56,79 +46,121 @@ class Form extends component {
 
     render () {
         return (
-            <div>
+            <div class="form-group">
                 <form onSubmit={ this.handleSubmit }>
-                    <label>Price/Day</label>
-                    <input
-                        name='price'
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>Bedrooms</label>
-                    <input
-                        name='bedrooms'
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>Bathrooms</label>
-                    <input
-                        name='bathrooms'
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>Room Type</label>
-                    <select
-                        name='roomType'
+                    <div class='input-label'>
+                        <label>Price/Day</label>
+                        <input
+                            class="form-control"
+                            name='price'
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>Bedrooms</label>
+                        <input
+                            class="form-control" 
+                            name='bedrooms'
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>Bathrooms</label>
+                        <input
+                            class="form-control" 
+                            name='bathrooms'
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>Room Type</label>
+                        <select
+                            class="form-control" 
+                            name='roomType'
+                        >
+                            <option>Private Room</option>
+                            <option>Shared Room</option>
+                            <option>Property</option>
+                        </select>
+                    </div>
+                    <div class='input-label'>
+                        <label>Property Type</label>
+                        <select
+                            class="form-control" 
+                            name='propertyType'
+                        >
+                            <option>Apartment</option>
+                            <option>Home</option>
+                            <option>Cottage</option>
+                            <option>Bed & Breakfast</option>
+                            <option>Hostel</option>
+                        </select>
+                    </div>
+                    <div class='input-label'>
+                        <label>Street Name</label>
+                        <input
+                            class="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>Street Number</label>
+                        <input
+                            class="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>City</label>
+                        <input
+                            class="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>State/Province</label>
+                        <input
+                            class="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>Country</label>
+                        <input
+                            class="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>ZIP/Postal Code</label>
+                        <input
+                            class="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>Accommodations</label>
+                        <input
+                            class="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        class="btn btn-primary submit-button"
                     >
-                        <option>Private Room</option>
-                        <option>Shared Room</option>
-                        <option>Property</option>
-                    </select>
-                    <label>Property Type</label>
-                    <select
-                        name='propertyType'
-                    >
-                        <option>Apartment</option>
-                        <option>Home</option>
-                        <option>Cottage</option>
-                        <option>Bed & Breakfast</option>
-                        <option>Hostel</option>
-                    </select>
-                    <label>Street Name</label>
-                    <input
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>Street Number</label>
-                    <input
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>City</label>
-                    <input
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>State/Province</label>
-                    <input
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>Country</label>
-                    <input
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>ZIP/Postal Code</label>
-                    <input
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
-                    <label>Accommodations</label>
-                    <input
-                        type='text'
-                        onChange={ this.handleChange }
-                    />
+                        Add
+                    </button>
                 </form>
             </div>
         );
