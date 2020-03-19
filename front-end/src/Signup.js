@@ -5,18 +5,17 @@ class Form extends Component {
         super(props);
 
         this.state = {
-            price: '',
-            bedrooms: '',
-            bathrooms: '',
-            roomType: '',
-            propertyType: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+            dateOfBirth: '',
             streetName: '',
             streetNumber: '',
             city: '',
             province: '',
             country: '',
             zipCode: ''
-
         }
     }
 
@@ -25,7 +24,7 @@ class Form extends Component {
 
         event.preventDefault();
 
-        await fetch('http://localhost:8090/properties', {
+        const response = await fetch('http://localhost:8090/persons', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -33,9 +32,11 @@ class Form extends Component {
             body: JSON.stringify(this.state)
         });
 
-        history.push({
-            pathname: '/'
-        });
+        const json = await response.json()
+
+        // history.push({
+        //     pathname: '/'
+        // });
     }
 
     handleChange = (event) => {
@@ -49,60 +50,46 @@ class Form extends Component {
             <div class="form-group">
                 <form onSubmit={ this.handleSubmit }>
                     <div class='input-label'>
-                        <label>Price/Day</label>
+                        <label>First Name</label>
                         <input
                             class="form-control"
-                            name='price'
+                            name='firstName'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
                     <div class='input-label'>
-                        <label>Bedrooms</label>
+                        <label>Last Name</label>
                         <input
                             class="form-control" 
-                            name='bedrooms'
+                            name='lastName'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
                     <div class='input-label'>
-                        <label>Bathrooms</label>
+                        <label>Email</label>
                         <input
                             class="form-control" 
-                            name='bathrooms'
+                            name='email'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
                     <div class='input-label'>
-                        <label>Room Type</label>
-                        <select
-                            class="form-control" 
-                            name='roomType'
-                        >
-                            <option>Private Room</option>
-                            <option>Shared Room</option>
-                            <option>Property</option>
-                        </select>
-                    </div>
-                    <div class='input-label'>
-                        <label>Property Type</label>
-                        <select
-                            class="form-control" 
-                            name='propertyType'
-                        >
-                            <option>Apartment</option>
-                            <option>Home</option>
-                            <option>Cottage</option>
-                            <option>Bed & Breakfast</option>
-                            <option>Hostel</option>
-                        </select>
-                    </div>
-                    <div class='input-label'>
-                        <label>Accommodations</label>
+                        <label>Phone Number</label>
                         <input
                             class="form-control" 
+                            name='phoneNumber'
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div class='input-label'>
+                        <label>Date of Birth</label>
+                        <input
+                            class="form-control" 
+                            name='dateOfBirth'
                             type='text'
                             onChange={ this.handleChange }
                         />
@@ -113,6 +100,7 @@ class Form extends Component {
                         <input
                             class="form-control" 
                             type='text'
+                            name='streetName'
                             onChange={ this.handleChange }
                         />
                     </div>
@@ -120,6 +108,7 @@ class Form extends Component {
                         <label>Street Number</label>
                         <input
                             class="form-control" 
+                            name='streetNumber'
                             type='text'
                             onChange={ this.handleChange }
                         />
@@ -127,6 +116,7 @@ class Form extends Component {
                     <div class='input-label'>
                         <label>City</label>
                         <input
+                            name='city'
                             class="form-control" 
                             type='text'
                             onChange={ this.handleChange }
@@ -135,6 +125,7 @@ class Form extends Component {
                     <div class='input-label'>
                         <label>State/Province</label>
                         <input
+                            name='province'
                             class="form-control" 
                             type='text'
                             onChange={ this.handleChange }
@@ -143,6 +134,7 @@ class Form extends Component {
                     <div class='input-label'>
                         <label>Country</label>
                         <input
+                            name='country'
                             class="form-control" 
                             type='text'
                             onChange={ this.handleChange }
@@ -151,6 +143,7 @@ class Form extends Component {
                     <div class='input-label'>
                         <label>ZIP/Postal Code</label>
                         <input
+                            name='zipCode'
                             class="form-control" 
                             type='text'
                             onChange={ this.handleChange }

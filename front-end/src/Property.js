@@ -6,8 +6,6 @@ class Property extends Component {
     render () {
         const { propertyAttributes } = this.props;
 
-        console.log(propertyAttributes)
-
         const amenities = _.map(propertyAttributes.amenities, amenity => <li key={ uuidv4() }>{ amenity }</li>);
 
         // const image = btoa(String.fromCharCode.apply(null, propertyAttributes.property_image.data));

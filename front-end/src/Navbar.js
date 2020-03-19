@@ -29,7 +29,7 @@ class Navbar extends Component {
       <nav className="navbar navbar-expand-sm mb-4">
         <div className="container">
           <Link className="navbar-brand" to="/">
-              Rentwise
+              RentWise
           </Link>
           <button
               className="navbar-toggler"
@@ -39,15 +39,29 @@ class Navbar extends Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <Nav navbar>
-              <NavItem right>
-                  <NavLink>
-                    <Link to="/property">
-                        Add
-                    </Link> 
-                  </NavLink>
-              </NavItem>
-          </Nav>
+            <Nav navbar>
+                <NavItem right>
+                    <NavLink>
+                        <Link to="/signup">
+                            Sign up
+                        </Link> 
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink>
+                        <Link to="/login">
+                            Login
+                        </Link>
+                    </NavLink>
+                </NavItem>
+                <NavItem right>
+                    <NavLink>
+                        <Link to="/property">
+                            Add
+                        </Link>
+                    </NavLink>
+                </NavItem>
+            </Nav>
         </div>
       </nav>
     );

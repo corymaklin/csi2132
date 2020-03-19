@@ -34,6 +34,47 @@ const getEmployees = (request, response) => {
     });
 };
 
+const createPerson = (request, response) => {
+    const {
+        firstName,
+        lastName,
+        streetName,
+        streetNumber,
+        city,
+        zipCode,
+        province,
+        country,
+        dateOfBirth,
+        email,
+        phoneNumber
+    } = request.body;
+
+    pool.query(`INSERT INTO
+        person
+        (first_name, last_name, street_name, street_number, city, zip_code, province, country, date_of_birth, email, phone_number)
+        VALUES
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+        RETURNING *`, [
+            firstName,
+            lastName,
+            streetName,
+            streetNumber,
+            city,
+            zipCode,
+            province,
+            country,
+            dateOfBirth,
+            `{${email}}`,
+            `{${phoneNumber}}`
+        ],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(201).send({id: results.rows[0].id});
+    });
+}
+
 const createProperty = (request, response) => {
     // const { property } = request.body;
     const {
@@ -92,6 +133,7 @@ const createProperty = (request, response) => {
 }
 
 module.exports = {
+    createPerson,
     createProperty,
     getProperties,
     getPersons,
