@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { setId } from './actionCreators';
 
 class Form extends Component {
     constructor (props) {
@@ -15,12 +17,14 @@ class Form extends Component {
             city: '',
             province: '',
             country: '',
-            zipCode: ''
+            zipCode: '',
+            username: '',
+            password: ''
         }
     }
 
-     handleSubmit = async (event) => {
-        const { history } = this.props;
+     handleSubmit = async event => {
+        const { history, dispatch } = this.props;
 
         event.preventDefault();
 
@@ -34,7 +38,15 @@ class Form extends Component {
 
         const json = await response.json()
 
-        
+        await fetch('http://localhost:8090/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ personId: json.id, ...this.state })
+        });
+
+        dispatch(setId(json.id));
 
         history.push({
             pathname: '/'
@@ -49,113 +61,133 @@ class Form extends Component {
 
     render () {
         return (
-            <div class="form-group">
+            <div className="form-group">
                 <form onSubmit={ this.handleSubmit }>
-                    <div class='input-label'>
+                    <h3>Personal Information</h3>
+                    <div className='input-label'>
                         <label>First Name</label>
                         <input
-                            class="form-control"
+                            className="form-control"
                             name='firstName'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Last Name</label>
                         <input
-                            class="form-control" 
+                            className="form-control" 
                             name='lastName'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Email</label>
                         <input
-                            class="form-control" 
+                            className="form-control" 
                             name='email'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Phone Number</label>
                         <input
-                            class="form-control" 
+                            className="form-control" 
                             name='phoneNumber'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Date of Birth</label>
                         <input
-                            class="form-control" 
+                            className="form-control" 
                             name='dateOfBirth'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
                     <h3>Address</h3>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Street Name</label>
                         <input
-                            class="form-control" 
+                            className="form-control" 
                             type='text'
                             name='streetName'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Street Number</label>
                         <input
-                            class="form-control" 
+                            className="form-control" 
                             name='streetNumber'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>City</label>
                         <input
                             name='city'
-                            class="form-control" 
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>State/Province</label>
                         <input
                             name='province'
-                            class="form-control" 
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Country</label>
                         <input
                             name='country'
-                            class="form-control" 
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>ZIP/Postal Code</label>
                         <input
                             name='zipCode'
-                            class="form-control" 
+                            className="form-control" 
                             type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <h3>Account</h3>
+                    <div className='input-label'>
+                        <label>Username</label>
+                        <input
+                            name='username'
+                            className="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div className='input-label'>
+                        <label>Password</label>
+                        <input
+                            name='password'
+                            className="form-control" 
+                            type='password'
                             onChange={ this.handleChange }
                         />
                     </div>
                     <button
                         type="submit"
-                        class="btn btn-primary submit-button"
+                        className="btn btn-primary submit-button"
                     >
-                        Add
+                        Sign up
                     </button>
                 </form>
             </div>
@@ -163,4 +195,12 @@ class Form extends Component {
     }
 }
 
-export default Form;
+function mapStateToProps(state) {
+    return {
+        id: state.id
+    };
+}
+
+export default connect(mapStateToProps)(Form);
+
+// export default Form;

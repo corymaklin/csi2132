@@ -19,11 +19,13 @@ app.use(
     })
 );
 
-app.get('/', (req, res) => res.send('Hello World'));
+// app.get('/', (req, res) => res.send('Hello World'));
 app.post('/properties', db.createProperty);
 app.get('/properties', db.getProperties);
 app.get('/persons', db.getPersons);
 app.post('/persons', db.createPerson);
 app.get('/employees', db.getEmployees);
+app.post('/signup', db.signup);
+app.post('/login', db.login);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

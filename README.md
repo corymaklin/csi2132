@@ -1,5 +1,8 @@
 drop type <type>;
 
+### list extensions
+\dx
+
 ### create database
 create database <name>;
 
@@ -42,7 +45,8 @@ ALTER TABLE property ADD COLUMN property_image bytea;
 UPDATE property SET property_image=bytea('/Users/cmaklin/Documents/csi2132/project/images/a1.png') WHERE id=1;
 UPDATE property SET property_image=bytea('/Users/cmaklin/Documents/csi2132/project/images/h1.jpg') WHERE id=2;
 
-
-
 ### drop column
 alter table property drop column property_image;
+
+### Get id for given username & password
+select person_id from credentials where username='cory' and password=crypt('maklin', gen_salt('bf'));

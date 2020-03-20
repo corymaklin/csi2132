@@ -1,3 +1,5 @@
+create extension pgcrypto;
+
 CREATE TYPE room_type AS ENUM ('private room', 'shared room', 'entire property');
 
 CREATE TYPE property_type AS ENUM ('apartment', 'home', 'cottage', 'bed & breakfast', 'hostel');
@@ -77,6 +79,13 @@ CREATE TABLE booking (
     date_to date NOT NULL,
     FOREIGN KEY (guest_id) REFERENCES person (id),
     FOREIGN KEY (property_id) REFERENCES property (id)
+);
+
+create table credentials (
+    username text NOT NULL UNIQUE,
+    password text NOT NULL,
+    person_id INTEGER NOT NULL,
+    FOREIGN KEY (person_id) REFERENCES person (id)
 );
 
 CREATE TABLE review (

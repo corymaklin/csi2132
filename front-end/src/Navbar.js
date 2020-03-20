@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import _ from 'lodash';
 
@@ -14,8 +15,7 @@ class Navbar extends Component {
   }
 
   render () {
-
-    console.log(this.props)
+    const { id } = this.props;
 
     return (
       <nav className="navbar navbar-expand-sm mb-4">
@@ -32,30 +32,36 @@ class Navbar extends Component {
             <span className="navbar-toggler-icon" />
           </button>
             <Nav navbar>
-                <NavItem right>
-                    <NavLink>
-                        <Link to="/signup">
-                        {/* <Link to={ { pathname: '/signup', search: this.props.location.search } }> */}
-                            Sign up
-                        </Link> 
-                    </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink>
-                        <Link to="/login">
-                        {/* <Link to={ { pathname: '/login', search: this.props.location.search } }> */}
-                            Login
-                        </Link>
-                    </NavLink>
-                </NavItem>
-                <NavItem right>
-                    <NavLink>
-                        <Link to="/property">
-                        {/* <Link to={ { pathname: '/property', search: this.props.location.search } }> */}
-                            Add
-                        </Link>
-                    </NavLink>
-                </NavItem>
+                {
+                    !id && 
+                    <NavItem right>
+                        <NavLink>
+                            <Link to="/signup">
+                                Sign up
+                            </Link> 
+                        </NavLink>
+                    </NavItem>
+                }
+                {
+                    !id &&
+                    <NavItem>
+                        <NavLink>
+                            <Link to="/login">
+                                Login
+                            </Link>
+                        </NavLink>
+                    </NavItem>
+                }
+                {
+                    id &&
+                    <NavItem right>
+                        <NavLink>
+                            <Link to="/property">
+                                Add
+                            </Link>
+                        </NavLink>
+                    </NavItem>
+                }
             </Nav>
         </div>
       </nav>
@@ -63,4 +69,10 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+function mapStateToProps(state) {
+    return {
+        id: state.id
+    };
+}
+
+export default connect(mapStateToProps)(Navbar);

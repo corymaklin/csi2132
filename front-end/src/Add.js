@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-class Form extends Component {
+class Add extends Component {
     constructor (props) {
         super(props);
 
@@ -8,20 +10,21 @@ class Form extends Component {
             price: '',
             bedrooms: '',
             bathrooms: '',
-            roomType: '',
-            propertyType: '',
+            roomType: 'private room',
+            propertyType: 'apartment',
+            accommodations: '',
             streetName: '',
             streetNumber: '',
             city: '',
             province: '',
             country: '',
             zipCode: ''
-
         }
     }
 
-     handleSubmit = async (event) => {
+     handleSubmit = async event => {
         const { history } = this.props;
+        const { id } = this.props;
 
         event.preventDefault();
 
@@ -30,7 +33,7 @@ class Form extends Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state)
+            body: JSON.stringify({ hostId: id, ...this.state })
         });
 
         history.push({
@@ -38,127 +41,151 @@ class Form extends Component {
         });
     }
 
-    handleChange = (event) => {
+    handleChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
     render () {
+        const { id } = this.props;
+
+        if (!id) {
+            return <Redirect to='/login' />
+        }
+
         return (
-            <div class="form-group">
+            <div className="form-group">
                 <form onSubmit={ this.handleSubmit }>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Price/Day</label>
                         <input
-                            class="form-control"
+                            className="form-control"
                             name='price'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Bedrooms</label>
                         <input
-                            class="form-control" 
+                            className="form-control" 
                             name='bedrooms'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Bathrooms</label>
                         <input
-                            class="form-control" 
+                            className="form-control" 
                             name='bathrooms'
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Room Type</label>
                         <select
-                            class="form-control" 
+                            className="form-control" 
                             name='roomType'
+                            onChange={ this.handleChange }
                         >
-                            <option>Private Room</option>
-                            <option>Shared Room</option>
-                            <option>Property</option>
+                            <option>private room</option>
+                            <option>shared room</option>
+                            <option>property</option>
                         </select>
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Property Type</label>
                         <select
-                            class="form-control" 
+                            className="form-control" 
                             name='propertyType'
+                            onChange={ this.handleChange }
                         >
-                            <option>Apartment</option>
-                            <option>Home</option>
-                            <option>Cottage</option>
-                            <option>Bed & Breakfast</option>
-                            <option>Hostel</option>
+                            <option>apartment</option>
+                            <option>home</option>
+                            <option>cottage</option>
+                            <option>bed & breakfast</option>
+                            <option>hostel</option>
                         </select>
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Accommodations</label>
                         <input
-                            class="form-control" 
+                            name='accommodations'
+                            className="form-control" 
+                            type='text'
+                            onChange={ this.handleChange }
+                        />
+                    </div>
+                    <div className='input-label'>
+                        <label>Amenities</label>
+                        <input
+                            name='amenities'
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
                     <h3>Address</h3>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Street Name</label>
                         <input
-                            class="form-control" 
+                            name='streetName'
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Street Number</label>
                         <input
-                            class="form-control" 
+                            name='streetNumber'
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>City</label>
                         <input
-                            class="form-control" 
+                            name='city'
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>State/Province</label>
                         <input
-                            class="form-control" 
+                            name='province'
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>Country</label>
                         <input
-                            class="form-control" 
+                            name='country'
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
-                    <div class='input-label'>
+                    <div className='input-label'>
                         <label>ZIP/Postal Code</label>
                         <input
-                            class="form-control" 
+                            name='zipCode'
+                            className="form-control" 
                             type='text'
                             onChange={ this.handleChange }
                         />
                     </div>
                     <button
                         type="submit"
-                        class="btn btn-primary submit-button"
+                        className="btn btn-primary submit-button"
                     >
                         Add
                     </button>
@@ -168,4 +195,12 @@ class Form extends Component {
     }
 }
 
-export default Form;
+// export default Form;
+
+function mapStateToProps(state) {
+    return {
+        id: state.id
+    };
+}
+
+export default connect(mapStateToProps)(Add);

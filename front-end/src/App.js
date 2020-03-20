@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Properties from './Properties';
-import Form from './Form';
+import Add from './Add';
 import Login from './Login';
 import Signup from './Signup';
 import Navbar from './Navbar';
@@ -15,7 +15,7 @@ function App() {
 		<Router>
 			<Navbar />
 			<Route path="/" exact={ true } component={ Properties } />
-			<Route path="/property" exact={ true } component={ Form } />
+			<Route path="/property" exact={ true } component={ Add } />
 			<Route path="/login" exact={ true } component={ Login } />
 			<Route path="/signup" exact={ true } component={ Signup } />
 		</Router>
