@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import Property from './Property';
+// import Property from './Property';
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 
 class Properties extends Component {
     constructor (props) {
@@ -33,15 +34,22 @@ class Properties extends Component {
 
         const propertyElements = _.map(properties, propertyAttributes => {
             return (
-                <Property
-                    key={ uuidv4() }
-                    propertyAttributes={ propertyAttributes }
-                />
+                <div key={ uuidv4() }>
+                    <Link to={ `/properties/${propertyAttributes.id}` }>
+                        <img src='/a1.png' className="img-thumbnail"/>
+                    </Link> 
+                    <p>Address: { `${propertyAttributes.province}, ${propertyAttributes.country}` }</p>
+                    <p>{ `${propertyAttributes.price} CAD/night` }</p>
+                </div>
+                // <Property
+                //     key={ uuidv4() }
+                //     propertyAttributes={ propertyAttributes }
+                // />
             );
         });
 
         return (
-            <div>
+            <div className='content'>
                 { propertyElements }
             </div>
         );

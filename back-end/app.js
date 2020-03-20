@@ -22,6 +22,7 @@ app.use(
 // app.get('/', (req, res) => res.send('Hello World'));
 app.post('/properties', db.createProperty);
 app.get('/properties', db.getProperties);
+app.get('/properties/:id', db.getProperty);
 app.get('/persons', db.getPersons);
 app.post('/persons', db.createPerson);
 app.get('/employees', db.getEmployees);

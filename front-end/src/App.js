@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Properties from './Properties';
+import Property from './Property';
 import Add from './Add';
 import Login from './Login';
 import Signup from './Signup';
@@ -15,7 +16,8 @@ function App() {
 		<Router>
 			<Navbar />
 			<Route path="/" exact={ true } component={ Properties } />
-			<Route path="/property" exact={ true } component={ Add } />
+			<Route path="/properties" exact={ true } component={ Add } />
+			<Route path="/properties/:id" component={ Property } />
 			<Route path="/login" exact={ true } component={ Login } />
 			<Route path="/signup" exact={ true } component={ Signup } />
 		</Router>

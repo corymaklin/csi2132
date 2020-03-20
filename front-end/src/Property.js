@@ -3,45 +3,64 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 class Property extends Component {
+    constructor (props) {
+        super(props);
+
+        this.state = {};
+    }
+
+    async componentDidMount () {
+        const { match } = this.props;
+
+        try {
+
+            const response = await fetch(`http://localhost:8090/properties/${match.params.id}`);
+    
+            const json = await response.json();            
+
+            this.setState({
+                ..._.head(json)
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render () {
-        const { propertyAttributes } = this.props;
+        const {
+            street_number,
+            street_name,
+            city,
+            province,
+            country,
+            zip_code,
+            price,
+            r_type,
+            p_type,
+            bedrooms,
+            bathrooms,
+            accommodations,
+            amenities
+        } = this.state;
 
-        const amenities = _.map(propertyAttributes.amenities, amenity => <li key={ uuidv4() }>{ amenity }</li>);
-
-        // const image = btoa(String.fromCharCode.apply(null, propertyAttributes.property_image.data));
-
-        // this.setState({pic: "data:image/png;base64," + image});
-
-        // var image = window.URL.createObjectURL(new Blob([ propertyAttributes.property_image.data ]));
-
-        // let base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
-
-        // var base64 = btoa(
-        // new Uint8Array(propertyAttributes.property_image.data)
-        //     .reduce((data, byte) => data + String.fromCharCode(byte), '')
-        // );
+        const amenitiesList = _.map(amenities, amenity => <li key={ uuidv4() }>{ amenity }</li>);
 
         return (
-            <div>
-                <p>Bedrooms: { propertyAttributes.bedrooms }</p>
-                <p>Bathrooms: { propertyAttributes.bathrooms }</p>
-                <h4>Amenities</h4>
+            <div className='content'>
+                <img src='/a1.png' className="img-thumbnail"/>
+                <p>Address: { `${street_number} ${street_name} Street, ${city}, ${province}, ${country} ${zip_code} ` }</p>
+                <p>{ `${price} CAD/night` }</p>
+                <p>{ p_type }</p>
+                <p>{ r_type }</p>
+                <p>Bedrooms: { bedrooms }</p>
+                <p>Bathrooms: { bathrooms }</p>
+                <p>Accommodations: { accommodations }</p>
+                <h5>Amenities</h5>
                 <ul>
-                    { amenities }
+                    { amenitiesList }
                 </ul>
-                <p>Address: { propertyAttributes.property_address }</p>
-                {/* <img src={ `data:image/jpeg;base64,${ propertyAttributes.property_image.data.toString('base64') }` } /> */}
-                {/* <img src={ `data:image/jpeg;base64,${ propertyAttributes.property_image.data }` } /> */}
-
-                {/* <img src={ `data:image/png;base64,${ propertyAttributes.property_image.data }` } /> */}
-                {/* <img src={ `data:image/png;base64,${ propertyAttributes.property_image.data.toString('base64') }` } /> */}
-                {/* <img src={ `png;base64,${ propertyAttributes.property_image.data.toString('base64') }` } /> */}
-                {/* <img src={ `data:image/jpeg;base64,${ propertyAttributes.property_image.data.toString('base64') }` } /> */}
-                {/* <img src={ `jpeg;base64,${ propertyAttributes.property_image.data.toString('base64') }` } /> */}
-                {/* <img src={ 'data:image/png;base64,' + base64 } /> */}
-                {/* <img src={ 'data:image/png;base64,' + image } /> */}
-                {/* <img src={ 'data:image/jpeg;base64,' + image } /> */}
-                {/* <img src={ image } /> */}
+                <button className='submit-button' >Book</button>
             </div>
         );
     }

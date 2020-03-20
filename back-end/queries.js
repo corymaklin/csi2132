@@ -8,7 +8,18 @@ const pool = new Pool({
 });
 
 const getProperties = (request, response) => {
-    pool.query('SELECT * FROM property', (error, results) => {
+    // pool.query('SELECT * FROM property', (error, results) => {
+        pool.query('SELECT id, province, country, price FROM property', (error, results) => {
+        if (error) {
+            // throw error
+            response.status(500).send();
+        }
+        response.status(200).json(results.rows);
+    });
+};
+
+const getProperty = (request, response) => {
+    pool.query(`SELECT * FROM property where id=${request.params.id}`, (error, results) => {
         if (error) {
             // throw error
             response.status(500).send();
@@ -183,6 +194,7 @@ module.exports = {
     createPerson,
     createProperty,
     getProperties,
+    getProperty,
     getPersons,
     getEmployees,
     login,
