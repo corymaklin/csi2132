@@ -50,3 +50,7 @@ alter table property drop column property_image;
 
 ### Get id for given username & password
 select person_id from credentials where username='cory' and password=crypt('maklin', gen_salt('bf'));
+
+### 
+UPDATE booking SET date_from='2020-03-23' WHERE id=2;
+UPDATE booking SET date_to='2020-03-26' WHERE id=2;

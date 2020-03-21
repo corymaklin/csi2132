@@ -28,5 +28,6 @@ app.post('/persons', db.createPerson);
 app.get('/employees', db.getEmployees);
 app.post('/signup', db.signup);
 app.post('/login', db.login);
+app.get('/bookings/:id', db.getBookings);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

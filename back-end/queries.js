@@ -7,14 +7,27 @@ const pool = new Pool({
     port: 5432,
 });
 
+const getBookings = (request, response) => {
+    // pool.query('SELECT * FROM property', (error, results) => {
+        pool.query(`SELECT property_id, date_from, date_to FROM booking where id=${request.params.id}`, (error, results) => {
+        if (error) {
+            // throw error
+            response.status(500).send();
+        } else {
+            response.status(200).json(results.rows);
+        }
+    });
+};
+
 const getProperties = (request, response) => {
     // pool.query('SELECT * FROM property', (error, results) => {
         pool.query('SELECT id, province, country, price FROM property', (error, results) => {
         if (error) {
             // throw error
             response.status(500).send();
+        } else {
+            response.status(200).json(results.rows);
         }
-        response.status(200).json(results.rows);
     });
 };
 
@@ -23,8 +36,9 @@ const getProperty = (request, response) => {
         if (error) {
             // throw error
             response.status(500).send();
+        } else {
+            response.status(200).json(results.rows);
         }
-        response.status(200).json(results.rows);
     });
 };
 
@@ -33,8 +47,9 @@ const getPersons = (request, response) => {
         if (error) {
             // throw error
             response.status(500).send();
+        } else {
+            response.status(200).json(results.rows);
         }
-        response.status(200).json(results.rows);
     });
 };
 
@@ -43,8 +58,9 @@ const getEmployees = (request, response) => {
         if (error) {
             // throw error
             response.status(500).send();
+        } else {
+            response.status(200).json(results.rows);
         }
-        response.status(200).json(results.rows);
     });
 };
 
@@ -85,8 +101,9 @@ const createPerson = (request, response) => {
             if (error) {
                 // throw error;
                 response.status(500).send();
+            } else {
+                response.status(201).send({id: results.rows[0].id});
             }
-            response.status(201).send({id: results.rows[0].id});
     });
 }
 
@@ -131,11 +148,12 @@ const createProperty = (request, response) => {
             if (error) {
                 // throw error
                 response.status(500).send();
-            }
-            if (results) {
-                response.status(201).send({id: results.rows[0].id});
             } else {
-                response.status(500).send();
+                if (results) {
+                    response.status(201).send({id: results.rows[0].id});
+                } else {
+                    response.status(500).send();
+                }
             }
     });
 }
@@ -181,16 +199,18 @@ const login = (request, response) => {
         (error, results) => {
             if (error) {
                 throw error;
-            }
-            if (results.rows[0]) {
-                response.status(201).send({id: results.rows[0].person_id});
             } else {
-                response.status(500).send();
-            }
+                if (results.rows[0]) {
+                    response.status(201).send({id: results.rows[0].person_id});
+                } else {
+                    response.status(500).send();
+                }
+            }    
     });
 }
 
 module.exports = {
+    getBookings,
     createPerson,
     createProperty,
     getProperties,
